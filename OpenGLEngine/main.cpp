@@ -1,13 +1,13 @@
 #include "src\graphics\window.h"
 #include "src\graphics\shader.h"
 
-#include <glm\glm.hpp>
+#include <glm\gtx\transform.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 int main() {
 	
 	using namespace thirdsengine;
 	using namespace graphics;
-	using namespace glm;
 
 	std::cout << "Thirds Engine initialising..." << std::endl;
 
@@ -29,6 +29,12 @@ int main() {
 
 	Shader shader("src/shader/vert.glsl", "src/shader/frag.glsl");
 	shader.enable();
+
+	glm::mat4 view = glm::lookAt(glm::vec3(5,2,5), glm::vec3(), glm::vec3(0,1,0));
+	//glm::mat4 view = glm::translate(glm::vec3(-1,0,0));
+	shader.setUniformMat4("viewMatrix", view);
+	glm::mat4 proj = glm::perspective(glm::radians(60.0f), 16.0f / 9.0f, 0.1f, 100.0f);
+	shader.setUniformMat4("projMatrix", proj);
 
 	while (!window.closed()) {
 		

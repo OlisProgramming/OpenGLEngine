@@ -1,5 +1,7 @@
 #include "shader.h"
 
+#include <glm\gtc\type_ptr.hpp>
+
 namespace thirdsengine {
 	namespace graphics {
 
@@ -70,6 +72,10 @@ namespace thirdsengine {
 			glDeleteShader(fragShader);
 
 			return program;
+		}
+
+		void Shader::setUniformMat4(const char* uniform, glm::mat4 mat) {
+			glUniformMatrix4fv(glGetUniformLocation(m_Shader, uniform), 1, GL_FALSE, glm::value_ptr(mat));
 		}
 	}
 }

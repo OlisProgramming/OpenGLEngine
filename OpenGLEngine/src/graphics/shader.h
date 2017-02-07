@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <GL/glew.h>
+#include <glm\glm.hpp>
 #include "../util/fileutils.h"
 
 namespace thirdsengine {
@@ -20,6 +21,8 @@ namespace thirdsengine {
 
 			void enable() const;
 			void disable() const;
+
+			void setUniformMat4(const char* uniform, glm::mat4 mat);
 		private:
 			GLuint load();
 		};
