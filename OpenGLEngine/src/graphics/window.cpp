@@ -3,7 +3,11 @@
 namespace thirdsengine {
 	namespace graphics {
 
+		Window *Window::instance = NULL;
+
 		Window::Window(const char *title, int width, int height) {
+			instance = this;
+
 			m_Title = title;
 			m_Width = width;
 			m_Height = height;
@@ -12,6 +16,11 @@ namespace thirdsengine {
 			{
 				glfwTerminate();
 			}
+
+			for (int i = 0; i < MAX_KEYS; i++)
+				m_Keys[i] = false;
+			for (int i = 0; i < MAX_BUTTONS; i++)
+				m_Buttons[i] = false;
 		}
 
 		Window::~Window() {
@@ -38,7 +47,12 @@ namespace thirdsengine {
 				return false;
 			}
 
-			glfwSetWindowSizeCallback(m_Window, callbackResize);
+			std::cout << "Using OpenGL " << glGetString(GL_VERSION) << std::endl;
+
+			glfwSetWindowSizeCallback(	m_Window, callbackResize);
+			glfwSetKeyCallback(			m_Window, callbackKey);
+			glfwSetMouseButtonCallback(	m_Window, callbackMouseButton);
+			glfwSetCursorPosCallback(	m_Window, callbackMouseMove);
 
 			return true;
 		}
@@ -62,8 +76,39 @@ namespace thirdsengine {
 			return glfwWindowShouldClose(m_Window) != 0;
 		}
 
-		void callbackResize(GLFWwindow *window, int width, int height) {
+		void Window::callbackResize(GLFWwindow *window, int width, int height) {
 			glViewport(0, 0, width, height);
+		}
+
+		void Window::callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods) {
+			instance->m_Keys[key] = (action != GLFW_RELEASE);
+		}
+
+		void Window::callbackMouseButton(GLFWwindow *window, int button, int action, int mods) {
+			instance->m_Buttons[button] = (action != GLFW_RELEASE);
+		}
+
+		void Window::callbackMouseMove(GLFWwindow *window, double xpos, double ypos) {
+			instance->m_MouseX = xpos;
+			instance->m_MouseY = ypos;
+		}
+
+		bool Window::keyPressed(unsigned int keycode) const {
+			if (keycode >= MAX_KEYS) return false;
+			return m_Keys[keycode];
+		}
+
+		bool Window::mouseButtonPressed(unsigned int button) const {
+			if (button >= MAX_BUTTONS) return false;
+			return m_Buttons[button];
+		}
+
+		double Window::mouseX() const {
+			return m_MouseX;
+		}
+
+		double Window::mouseY() const {
+			return m_MouseY;
 		}
 	}
 }

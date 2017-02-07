@@ -14,6 +14,9 @@ int main() {
 	while (!window.closed()) {
 		
 		window.clear();
+#if 0
+		std::cout << window.mouseX() << " " << window.mouseY() << std::endl;
+#endif
 
 		glBegin(GL_TRIANGLES);
 		glVertex2f(-0.5f, -0.5f);
