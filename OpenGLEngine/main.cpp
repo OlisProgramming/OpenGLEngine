@@ -1,9 +1,13 @@
 #include "src\graphics\window.h"
+#include "src\util\fileutils.h"
+
+#include <glm\glm.hpp>
 
 int main() {
 	
 	using namespace thirdsengine;
 	using namespace graphics;
+	using namespace glm;
 
 	std::cout << "Thirds Engine initialising..." << std::endl;
 
@@ -14,9 +18,6 @@ int main() {
 	while (!window.closed()) {
 		
 		window.clear();
-#if 0
-		std::cout << window.mouseX() << " " << window.mouseY() << std::endl;
-#endif
 
 		glBegin(GL_TRIANGLES);
 		glVertex2f(-0.5f, -0.5f);
