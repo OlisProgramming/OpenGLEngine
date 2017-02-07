@@ -43,12 +43,23 @@ int main() {
 		2, 1, 3,
 		2, 4, 1,
 	};
+	GLfloat colours[] = {
+		1.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		0.0f, 1.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f, 1.0f,
+	};
 
 	VertexArray vao;
-	Buffer* vbo = new Buffer(vertices, sizeof(vertices) / sizeof(GLfloat), 3);
 	IndexBuffer ibo(indices, sizeof(indices) / sizeof(GLushort));
 
-	vao.addBuffer(vbo, 0);
+	vao.addBuffer(
+		new Buffer(vertices, sizeof(vertices) / sizeof(GLfloat), 3),
+		0);
+	vao.addBuffer(
+		new Buffer(colours, sizeof(colours) / sizeof(GLfloat), 4),
+		1);
 #endif
 
 	Shader shader("src/shader/vert.glsl", "src/shader/frag.glsl");
