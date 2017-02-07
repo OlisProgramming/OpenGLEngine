@@ -4,7 +4,7 @@
 
 namespace thirdsengine {
 
-	std::string readFile(const char* fname) {
+	inline std::string readFile(const char* fname) {
 		FILE* file = fopen(fname, "rt");
 		fseek(file, 0, SEEK_END);
 		unsigned long length = ftell(file);
