@@ -34,6 +34,7 @@ namespace thirdsengine {
 
 			inline int getWidth() const { return m_Width; }
 			inline int getHeight() const { return m_Height; }
+			inline float getAspect() const { return (float)getWidth() / (float)getHeight(); }
 
 			bool keyPressed(unsigned int keycode) const;
 			bool mouseButtonPressed(unsigned int button) const;
