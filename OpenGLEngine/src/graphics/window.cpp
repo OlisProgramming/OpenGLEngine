@@ -1,11 +1,14 @@
 #include "window.h"
 
+#include <glm\gtx\transform.hpp>
+
 namespace thirdsengine {
 	namespace graphics {
 
 		Window *Window::instance = NULL;
 
-		Window::Window(const char *title, int width, int height) {
+		Window::Window(const char *title, int width, int height) :
+			m_Shader(NULL) {
 			instance = this;
 
 			m_Title = title;
@@ -80,8 +83,22 @@ namespace thirdsengine {
 			return glfwWindowShouldClose(m_Window) != 0;
 		}
 
+		void Window::setSize(int width, int height) {
+			m_Width = width;
+			m_Height = height;
+			glm::mat4 proj = glm::perspective(glm::radians(60.0f), getAspect(), 0.1f, 100.0f);
+			m_Shader->setUniformMat4("projMatrix", proj);
+		}
+
+		void Window::setShader(Shader* shader) {
+			m_Shader = shader;
+			glm::mat4 proj = glm::perspective(glm::radians(60.0f), getAspect(), 0.1f, 100.0f);
+			m_Shader->setUniformMat4("projMatrix", proj);
+		}
+
 		void Window::callbackResize(GLFWwindow *window, int width, int height) {
 			glViewport(0, 0, width, height);
+			instance->setSize(width, height);
 		}
 
 		void Window::callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods) {

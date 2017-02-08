@@ -49,6 +49,8 @@ int main() {
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
 	shader.setUniformMat4("projMatrix", proj);
 
+	window.setShader(&shader);
+
 	Renderable2D renderable(glm::vec3(), glm::vec2(1,1), glm::vec4(1.0, 0.0, 0.0, 1.0));
 	Renderer2DBasic renderer;
 

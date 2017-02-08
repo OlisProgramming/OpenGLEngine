@@ -4,6 +4,8 @@
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 
+#include "shader.h"
+
 namespace thirdsengine {
 	namespace graphics {
 
@@ -25,6 +27,8 @@ namespace thirdsengine {
 			bool m_Buttons[MAX_BUTTONS];
 			double m_MouseX, m_MouseY;
 
+			Shader* m_Shader;
+
 		public:
 			Window(const char *title, int width, int height);
 			~Window();
@@ -41,8 +45,11 @@ namespace thirdsengine {
 			double mouseX() const;
 			double mouseY() const;
 
+			void setShader(Shader* shader);
+
 		private:
 			bool init();
+			void setSize(int width, int height);
 			static void callbackResize(GLFWwindow *window, int width, int height);
 			static void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods);
 			static void callbackMouseButton(GLFWwindow *window, int button, int action, int mods);
