@@ -3,6 +3,9 @@
 #include "src\graphics\buffers\buffer.h"
 #include "src\graphics\buffers\indexbuffer.h"
 #include "src\graphics\buffers\vertexarray.h"
+#include "src\graphics\renderer2d.h"
+#include "src\graphics\renderable2d.h"
+#include "src\graphics\renderer2dbasic.h"
 
 #include <glm\gtx\transform.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -17,20 +20,6 @@ int main() {
 	Window window("Thirds Engine", 960, 540);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-#if 0
-	GLfloat vertices[] = {
-		-0.5f,	-0.5f,	0.0f,
-		 0.0f,	 0.5f,	0.0f,
-		 0.5f,	-0.5f,	0.0f,
-	};
-
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-#else
 	GLfloat vertices[] = {
 		-0.5f,	-0.5f,	0.0f,
 		0.5f,	 0.5f,	0.0f,
@@ -51,17 +40,6 @@ int main() {
 		0.0f, 0.0f, 1.0f, 1.0f,
 	};
 
-	VertexArray vao;
-	IndexBuffer ibo(indices, sizeof(indices) / sizeof(GLushort));
-
-	vao.addBuffer(
-		new Buffer(vertices, sizeof(vertices) / sizeof(GLfloat), 3),
-		0);
-	vao.addBuffer(
-		new Buffer(colours, sizeof(colours) / sizeof(GLfloat), 4),
-		1);
-#endif
-
 	Shader shader("src/shader/vert.glsl", "src/shader/frag.glsl");
 	shader.enable();
 
@@ -71,20 +49,16 @@ int main() {
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
 	shader.setUniformMat4("projMatrix", proj);
 
+	Renderable2D renderable(glm::vec3(), glm::vec2(1,1), glm::vec4(1.0, 0.0, 0.0, 1.0));
+	Renderer2DBasic renderer;
+
 	while (!window.closed()) {
 		
 		window.clear();
-
-#if 0
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-#else
-		vao.enable();
-		ibo.enable();
-		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
-		ibo.disable();
-		vao.disable();
-#endif
 		
+		renderer.submit(&renderable);
+		renderer.flush(shader);
+
 		window.update();
 	}
 
