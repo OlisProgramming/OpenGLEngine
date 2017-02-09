@@ -19,38 +19,19 @@ int main() {
 	Window window("Thirds Engine", 960, 540);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-	GLfloat vertices[] = {
-		-0.5f,	-0.5f,	0.0f,
-		0.5f,	 0.5f,	0.0f,
-		-0.5f,	 0.5f,	0.0f,
-		0.5f,	-0.5f,	0.0f,
-		0.0f,	1.0f,	0.0f,
-	};
-	GLushort indices[] = {
-		0, 2, 3,
-		2, 1, 3,
-		2, 4, 1,
-	};
-	GLfloat colours[] = {
-		1.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-	};
-
 	Shader shader("src/shader/vert.glsl", "src/shader/frag.glsl");
 	shader.enable();
 
-	glm::mat4 view = glm::lookAt(glm::vec3(2,1,2), glm::vec3(), glm::vec3(0,1,0));
-	//glm::mat4 view = glm::translate(glm::vec3(-1,0,0));
+	glm::mat4 view = glm::lookAt(glm::vec3(2,0,2), glm::vec3(), glm::vec3(0,1,0));
 	shader.setUniformMat4("viewMatrix", view);
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
 	shader.setUniformMat4("projMatrix", proj);
 
 	window.setShader(&shader);
 
-	Sprite sprite(glm::vec3(), glm::vec2(1,1), glm::vec4(1.0, 0.0, 0.0, 1.0));
+	std::vector<Sprite*> sprites;
+	for (int i = 0; i < 10; i++)
+		sprites.push_back(new Sprite(glm::vec3(0.0,-0.5,i/5.0), glm::vec2(1,1), glm::vec4(1.0, 0.0, i/10.0, 1.0)));
 	Renderer2DBatched renderer;
 
 	while (!window.closed()) {
@@ -58,12 +39,15 @@ int main() {
 		window.clear();
 		
 		renderer.begin();
-		renderer.submit(&sprite);
+		for (Sprite* spr : sprites)
+			renderer.submit(spr);
 		renderer.end();
 		renderer.flush(shader);
 
 		window.update();
 	}
+
+	sprites.clear();
 
 	return 0;
 }
