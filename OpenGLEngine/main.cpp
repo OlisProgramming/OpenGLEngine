@@ -3,9 +3,8 @@
 #include "src\graphics\buffers\buffer.h"
 #include "src\graphics\buffers\indexbuffer.h"
 #include "src\graphics\buffers\vertexarray.h"
-#include "src\graphics\renderer2d.h"
-#include "src\graphics\renderable2d.h"
-#include "src\graphics\renderer2dbasic.h"
+#include "src\graphics\sprite.h"
+#include "src\graphics\renderer2dbatched.h"
 
 #include <glm\gtx\transform.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -51,14 +50,16 @@ int main() {
 
 	window.setShader(&shader);
 
-	Renderable2D renderable(glm::vec3(), glm::vec2(1,1), glm::vec4(1.0, 0.0, 0.0, 1.0));
-	Renderer2DBasic renderer;
+	Sprite sprite(glm::vec3(), glm::vec2(1,1), glm::vec4(1.0, 0.0, 0.0, 1.0));
+	Renderer2DBatched renderer;
 
 	while (!window.closed()) {
 		
 		window.clear();
 		
-		renderer.submit(&renderable);
+		renderer.begin();
+		renderer.submit(&sprite);
+		renderer.end();
 		renderer.flush(shader);
 
 		window.update();

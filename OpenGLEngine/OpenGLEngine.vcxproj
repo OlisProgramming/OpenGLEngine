@@ -124,7 +124,10 @@
     <ClCompile Include="src\graphics\buffers\vertexarray.cpp" />
     <ClCompile Include="src\graphics\renderable2d.cpp" />
     <ClCompile Include="src\graphics\renderer2dbasic.cpp" />
+    <ClCompile Include="src\graphics\renderer2dbatched.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
+    <ClCompile Include="src\graphics\sprite.cpp" />
+    <ClCompile Include="src\graphics\spritestatic.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +137,10 @@
     <ClInclude Include="src\graphics\renderable2d.h" />
     <ClInclude Include="src\graphics\renderer2d.h" />
     <ClInclude Include="src\graphics\renderer2dbasic.h" />
+    <ClInclude Include="src\graphics\renderer2dbatched.h" />
     <ClInclude Include="src\graphics\shader.h" />
+    <ClInclude Include="src\graphics\sprite.h" />
+    <ClInclude Include="src\graphics\spritestatic.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\util\fileutils.h" />
   </ItemGroup>

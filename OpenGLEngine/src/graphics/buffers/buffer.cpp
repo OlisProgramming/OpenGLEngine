@@ -14,6 +14,10 @@ namespace thirdsengine {
 			glBindBuffer(GL_ARRAY_BUFFER, NULL);
 		}
 
+		Buffer::~Buffer() {
+			glDeleteBuffers(1, &m_BufferID);
+		}
+
 		void Buffer::enable() const {
 			glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
 		}

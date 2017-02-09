@@ -12,6 +12,7 @@ namespace thirdsengine {
 
 		public:
 			Buffer(GLfloat* data, GLsizei count, GLint componentCount);
+			~Buffer();
 
 			void enable() const;
 			void disable() const;

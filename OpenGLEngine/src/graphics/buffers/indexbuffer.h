@@ -12,6 +12,7 @@ namespace thirdsengine {
 
 		public:
 			IndexBuffer(GLushort* data, GLsizei count);
+			~IndexBuffer();
 
 			void enable() const;
 			void disable() const;

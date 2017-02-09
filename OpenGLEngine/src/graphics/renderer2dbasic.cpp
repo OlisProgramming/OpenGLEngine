@@ -6,12 +6,12 @@ namespace thirdsengine {
 	namespace graphics {
 
 		void Renderer2DBasic::submit(Renderable2D* renderable) {
-			m_Renderables.push_back(renderable);
+			m_Sprites.push_back((SpriteStatic*)renderable);
 		}
 
 		void Renderer2DBasic::flush(Shader& currentShader) {
-			while (!m_Renderables.empty()) {
-				Renderable2D* renderable = m_Renderables.front();
+			while (!m_Sprites.empty()) {
+				SpriteStatic* renderable = (SpriteStatic*)(m_Sprites.front());
 				renderable->getVAO()->enable();
 				renderable->getIBO()->enable();
 				
@@ -21,7 +21,7 @@ namespace thirdsengine {
 				renderable->getIBO()->disable();
 				renderable->getVAO()->disable();
 
-				m_Renderables.pop_front();
+				m_Sprites.pop_front();
 			}
 		}
 	}
