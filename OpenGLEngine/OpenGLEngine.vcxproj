@@ -143,6 +143,7 @@
     <ClInclude Include="src\graphics\spritestatic.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\util\fileutils.h" />
+    <ClInclude Include="src\util\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shader\frag.glsl" />

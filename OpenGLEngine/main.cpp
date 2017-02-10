@@ -5,6 +5,7 @@
 #include "src\graphics\buffers\vertexarray.h"
 #include "src\graphics\sprite.h"
 #include "src\graphics\renderer2dbatched.h"
+#include "src\util\timer.h"
 
 #include <glm\gtx\transform.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -36,6 +37,8 @@ int main() {
 	
 	Renderer2DBatched renderer(shader);
 
+	Timer timer;
+
 	while (!window.closed()) {
 		
 		window.clear();
@@ -47,6 +50,10 @@ int main() {
 		renderer.flush();
 
 		window.update();
+
+		timer.tick();
+		printf("%f Average FPS\n", timer.getFPSStable());
+		timer.reset();
 	}
 
 	sprites.clear();
