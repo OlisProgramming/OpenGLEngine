@@ -13,7 +13,7 @@ namespace thirdsengine {
 
 		public:
 			void submit(Renderable2D* renderable) override;
-			void flush(Shader& currentShader) override;
+			void flush() override;
 		};
 	}
 }

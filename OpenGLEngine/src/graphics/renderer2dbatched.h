@@ -13,13 +13,14 @@ namespace thirdsengine {
 			GLsizei m_IndexCount;
 			GLuint m_VBO;
 			VertexData* m_Buffer;
+			Shader& m_CurrentShader;
 		public:
-			Renderer2DBatched();
+			Renderer2DBatched(Shader& shader);
 			~Renderer2DBatched();
 			void begin();
 			void submit(Renderable2D* renderable) override;
 			void end();
-			void flush(Shader& currentShader) override;
+			void flush() override;
 		};
 	}
 }

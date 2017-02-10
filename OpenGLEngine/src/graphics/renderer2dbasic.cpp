@@ -9,7 +9,7 @@ namespace thirdsengine {
 			m_Sprites.push_back((SpriteStatic*)renderable);
 		}
 
-		void Renderer2DBasic::flush(Shader& currentShader) {
+		void Renderer2DBasic::flush() {
 			while (!m_Sprites.empty()) {
 				SpriteStatic* renderable = (SpriteStatic*)(m_Sprites.front());
 				renderable->getVAO()->enable();

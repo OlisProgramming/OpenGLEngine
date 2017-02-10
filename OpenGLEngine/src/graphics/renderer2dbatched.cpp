@@ -3,7 +3,8 @@
 namespace thirdsengine {
 	namespace graphics {
 
-		Renderer2DBatched::Renderer2DBatched() {
+		Renderer2DBatched::Renderer2DBatched(Shader& shader) :
+			m_CurrentShader(shader) {
 
 			glGenVertexArrays(1, &m_VAO);
 			glBindVertexArray(m_VAO);
@@ -53,6 +54,13 @@ namespace thirdsengine {
 		}
 
 		void Renderer2DBatched::submit(Renderable2D* renderable) {
+
+			if (m_IndexCount + 6 > RENDERER2D_INDICES_SIZE) {
+				end();
+				flush();
+				begin();
+			}
+
 			const glm::vec3& pos = renderable->getPosition();
 			const glm::vec2& size = renderable->getSize();
 			const glm::vec4& col = renderable->getColour();
@@ -81,7 +89,7 @@ namespace thirdsengine {
 			glBindBuffer(GL_ARRAY_BUFFER, NULL);
 		}
 
-		void Renderer2DBatched::flush(Shader& currentShader) {
+		void Renderer2DBatched::flush() {
 			glBindVertexArray(m_VAO);
 			m_IBO->enable();
 

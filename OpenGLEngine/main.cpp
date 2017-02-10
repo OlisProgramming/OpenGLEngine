@@ -22,7 +22,7 @@ int main() {
 	Shader shader("src/shader/vert.glsl", "src/shader/frag.glsl");
 	shader.enable();
 
-	glm::mat4 view = glm::lookAt(glm::vec3(2,0,2), glm::vec3(), glm::vec3(0,1,0));
+	glm::mat4 view = glm::lookAt(glm::vec3(10,10,20), glm::vec3(10,10,0), glm::vec3(0,1,0));
 	shader.setUniformMat4("viewMatrix", view);
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
 	shader.setUniformMat4("projMatrix", proj);
@@ -30,9 +30,11 @@ int main() {
 	window.setShader(&shader);
 
 	std::vector<Sprite*> sprites;
-	for (int i = 0; i < 10; i++)
-		sprites.push_back(new Sprite(glm::vec3(0.0,-0.5,i/5.0), glm::vec2(1,1), glm::vec4(1.0, 0.0, i/10.0, 1.0)));
-	Renderer2DBatched renderer;
+	for (float i = 0; i < 20; i+=0.1)
+		for (float j = 0; j < 20; j += 0.1)
+			sprites.push_back(new Sprite(glm::vec3(i,j,0.0), glm::vec2(0.08, 0.08), glm::vec4(i/20.0, 1.0, j/20.0, 1.0)));
+	
+	Renderer2DBatched renderer(shader);
 
 	while (!window.closed()) {
 		
@@ -42,7 +44,7 @@ int main() {
 		for (Sprite* spr : sprites)
 			renderer.submit(spr);
 		renderer.end();
-		renderer.flush(shader);
+		renderer.flush();
 
 		window.update();
 	}
