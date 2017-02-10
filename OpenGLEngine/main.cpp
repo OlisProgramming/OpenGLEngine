@@ -30,8 +30,8 @@ int main() {
 	window.setShader(&shader);
 
 	std::vector<Sprite*> sprites;
-	for (float i = 0; i < 20; i+=0.1)
-		for (float j = 0; j < 20; j += 0.1)
+	for (float i = 0; i < 20; i+=0.1f)
+		for (float j = 0; j < 20; j += 0.1f)
 			sprites.push_back(new Sprite(glm::vec3(i,j,0.0), glm::vec2(0.08, 0.08), glm::vec4(i/20.0, 1.0, j/20.0, 1.0)));
 	
 	Renderer2DBatched renderer(shader);
