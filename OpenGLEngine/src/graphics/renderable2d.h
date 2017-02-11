@@ -10,7 +10,8 @@ namespace thirdsengine {
 
 		struct VertexData {
 			glm::vec3 pos;
-			glm::vec4 col;
+			//glm::vec4 col;
+			unsigned int col;
 		};
 
 		class Renderable2D {

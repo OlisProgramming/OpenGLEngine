@@ -17,8 +17,8 @@ namespace thirdsengine {
 			glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
 			glEnableVertexAttribArray(SHADER_COLOUR_INDEX);
 
-			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER2D_VERTEX_SIZE, (const GLvoid*)0);
-			glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER2D_VERTEX_SIZE, (const GLvoid*)(3 * sizeof(GLfloat)));
+			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER2D_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::pos)));
+			glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER2D_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::col)));
 
 			glBindBuffer(GL_ARRAY_BUFFER, NULL);
 
@@ -63,7 +63,13 @@ namespace thirdsengine {
 
 			const glm::vec3& pos = renderable->getPosition();
 			const glm::vec2& size = renderable->getSize();
-			const glm::vec4& col = renderable->getColour();
+			const glm::vec4& colour = renderable->getColour();
+
+			int r = (int)(colour.x * 255.0f);
+			int g = (int)(colour.y * 255.0f);
+			int b = (int)(colour.z * 255.0f);
+			int a = (int)(colour.w * 255.0f);
+			unsigned int col = a << 24 | b << 16 | g << 8 | r;
 
 			m_Buffer->pos = pos;
 			m_Buffer->col = col;

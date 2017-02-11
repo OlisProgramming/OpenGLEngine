@@ -56,6 +56,7 @@ namespace thirdsengine {
 			glfwSetKeyCallback(			m_Window, callbackKey);
 			glfwSetMouseButtonCallback(	m_Window, callbackMouseButton);
 			glfwSetCursorPosCallback(	m_Window, callbackMouseMove);
+			glfwSwapInterval(0);  // Disables VSync
 
 			return true;
 		}
