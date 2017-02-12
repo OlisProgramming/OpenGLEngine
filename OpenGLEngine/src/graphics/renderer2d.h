@@ -19,8 +19,10 @@ namespace thirdsengine {
 #define SHADER_COLOUR_INDEX			(1)
 
 		class Renderer2D {
-		protected:
+		public:
+			virtual void begin() = 0;
 			virtual void submit(Renderable2D* renderable) = 0;
+			virtual void end() = 0;
 			virtual void flush() = 0;
 		};
 	}

@@ -18,9 +18,9 @@ namespace thirdsengine {
 		public:
 			Renderer2DBatched(Shader& shader);
 			~Renderer2DBatched();
-			void begin();
+			void begin() override;
 			void submit(Renderable2D* renderable) override;
-			void end();
+			void end() override;
 			void flush() override;
 		};
 	}

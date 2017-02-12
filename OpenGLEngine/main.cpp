@@ -6,6 +6,7 @@
 #include "src\graphics\sprite.h"
 #include "src\graphics\renderer2dbatched.h"
 #include "src\util\timer.h"
+#include "src\graphics\layers\layerscene.h"
 
 #include <glm\gtx\transform.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -20,34 +21,31 @@ int main() {
 	Window window("Thirds Engine", 960, 540);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-	Shader shader("src/shader/vert.glsl", "src/shader/frag.glsl");
-	shader.enable();
+	Shader* shader = new Shader("src/shader/vert.glsl", "src/shader/frag.glsl");
 
-	glm::mat4 view = glm::lookAt(glm::vec3(10,10,20), glm::vec3(10,10,0), glm::vec3(0,1,0));
-	shader.setUniformMat4("viewMatrix", view);
+	shader->enable();
+
+	glm::mat4 view = glm::lookAt(glm::vec3(10, 10, 20), glm::vec3(10, 10, 0), glm::vec3(0, 1, 0));
+	shader->setUniformMat4("viewMatrix", view);
+
+	shader->disable();
+
+	window.setShader(shader);
+
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
-	shader.setUniformMat4("projMatrix", proj);
+	LayerScene* layer = new LayerScene(shader, proj);
 
-	window.setShader(&shader);
-
-	std::vector<Sprite*> sprites;
-	for (float i = 0; i < 20; i+=0.1f)
+	for (float i = 0; i < 20; i += 0.1f)
 		for (float j = 0; j < 20; j += 0.1f)
-			sprites.push_back(new Sprite(glm::vec3(i,j,0.0), glm::vec2(0.08, 0.08), glm::vec4(i/20.0, 1.0, j/20.0, 1.0)));
-	
-	Renderer2DBatched renderer(shader);
+			layer->add(new Sprite(glm::vec3(i, j, 0.0), glm::vec2(0.08, 0.08), glm::vec4(i / 20.0, 1.0, j / 20.0, 1.0)));
 
 	Timer timer;
 
 	while (!window.closed()) {
 		
 		window.clear();
-		
-		renderer.begin();
-		for (Sprite* spr : sprites)
-			renderer.submit(spr);
-		renderer.end();
-		renderer.flush();
+
+		layer->render();
 
 		window.update();
 
@@ -56,7 +54,7 @@ int main() {
 		timer.reset();
 	}
 
-	sprites.clear();
+	delete layer;
 
 	return 0;
 }
