@@ -61,7 +61,7 @@ namespace thirdsengine {
 				begin();
 			}
 
-			const glm::vec3& pos = renderable->getPosition();
+			const glm::vec3& pos = m_CurrentTransformation * glm::vec4(renderable->getPosition(), 1.0);
 			const glm::vec2& size = renderable->getSize();
 			const glm::vec4& colour = renderable->getColour();
 
