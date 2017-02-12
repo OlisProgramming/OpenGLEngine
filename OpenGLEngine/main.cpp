@@ -28,8 +28,6 @@ int main() {
 	glm::mat4 view = glm::lookAt(glm::vec3(10, 10, 20), glm::vec3(10, 10, 0), glm::vec3(0, 1, 0));
 	shader->setUniformMat4("viewMatrix", view);
 
-	shader->disable();
-
 	window.setShader(shader);
 
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
