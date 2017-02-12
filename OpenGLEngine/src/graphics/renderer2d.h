@@ -2,9 +2,14 @@
 
 #include <GL\glew.h>
 #include <glm\glm.hpp>
+#include <glm\gtx\transform.hpp>
+#include <glm\gtc\quaternion.hpp>
+#include <glm\gtx\quaternion.hpp>
 
 #include "renderable2d.h"
 #include "shader.h"
+
+#include "../util/constants.h"
 
 namespace thirdsengine {
 	namespace graphics {
@@ -34,6 +39,13 @@ namespace thirdsengine {
 					m_TransformationStack.push_back(m_TransformationStack.back() * matrix);
 				m_CurrentTransformation = m_TransformationStack.back();
 			}
+
+			void pushTranslate(glm::vec3 vector, bool override = false) { push(glm::translate(vector), override); }
+
+			// Rotation matrix MUST be in radians!
+			void pushRotate(float angle, glm::vec3 vector, bool override = false) { push(glm::toMat4(glm::angleAxis(angle, vector)), override); }
+			
+			void pushScale(glm::vec3 vector, bool override = false) { push(glm::scale(vector), override); }
 
 			void pop() {
 				if (m_TransformationStack.size() > 1)

@@ -221,6 +221,7 @@
     <ClInclude Include="src\graphics\sprite.h" />
     <ClInclude Include="src\graphics\spritestatic.h" />
     <ClInclude Include="src\graphics\window.h" />
+    <ClInclude Include="src\util\constants.h" />
     <ClInclude Include="src\util\fileutils.h" />
     <ClInclude Include="src\util\glprinterror.h" />
     <ClInclude Include="src\util\timer.h" />
