@@ -5,6 +5,7 @@
 #include "src\graphics\buffers\vertexarray.h"
 #include "src\graphics\sprite.h"
 #include "src\graphics\renderer2dbatched.h"
+#include "src\graphics\renderablegroup2d.h"
 #include "src\util\timer.h"
 #include "src\graphics\layers\layerscene.h"
 
@@ -33,9 +34,17 @@ int main() {
 	glm::mat4 proj = glm::perspective(glm::radians(60.0f), window.getAspect(), 0.1f, 100.0f);
 	LayerScene* layer = new LayerScene(shader, proj);
 
+	RenderableGroup2D* group = new RenderableGroup2D();
+
 	for (float i = 0; i < 20; i += 0.1f)
 		for (float j = 0; j < 20; j += 0.1f)
-			layer->add(new Sprite(glm::vec3(i, j, 0.0), glm::vec2(0.08, 0.08), glm::vec4(i / 20.0, 1.0, j / 20.0, 1.0)));
+			group->add(new Sprite(glm::vec3(i, j, 0.0), glm::vec2(0.08, 0.08), glm::vec4(i / 20.0, 1.0, j / 20.0, 1.0)));
+
+	group->push(MATRIX_TRANSLATE(glm::vec3(-10, -10, 0)));
+	group->push(MATRIX_ROTATE(DEGREES_45, glm::vec3(0, 0, 1)));
+	group->push(MATRIX_TRANSLATE(glm::vec3(10, 10, 0)));
+
+	layer->add(group);
 
 	Timer timer;
 

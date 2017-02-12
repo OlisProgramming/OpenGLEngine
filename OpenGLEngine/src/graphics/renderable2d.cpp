@@ -1,5 +1,7 @@
 #include "renderable2d.h"
 
+#include "renderer2d.h"
+
 namespace thirdsengine {
 	namespace graphics {
 
@@ -7,5 +9,9 @@ namespace thirdsengine {
 			m_Position(pos), m_Size(size), m_Colour(col) { }
 
 		Renderable2D::~Renderable2D() { }
+
+		void Renderable2D::submitTo(Renderer2D* renderer) {
+			renderer->submit(this);
+		}
 	}
 }

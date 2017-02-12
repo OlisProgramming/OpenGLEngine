@@ -1,13 +1,9 @@
 #pragma once
 
 #include <GL\glew.h>
-#include <glm\glm.hpp>
-#include <glm\gtx\transform.hpp>
-#include <glm\gtc\quaternion.hpp>
-#include <glm\gtx\quaternion.hpp>
 
-#include "renderable2d.h"
 #include "shader.h"
+#include "transformationstack.h"
 
 #include "../util/constants.h"
 
@@ -23,35 +19,22 @@ namespace thirdsengine {
 #define SHADER_VERTEX_INDEX			(0)
 #define SHADER_COLOUR_INDEX			(1)
 
+		class Renderable2D;
+
 		class Renderer2D {
 		private:
-			std::vector<glm::mat4> m_TransformationStack;
-		protected:
-			glm::mat4 m_CurrentTransformation;
+			TransformationStack m_TransformationStack;
 
-		protected:
-			Renderer2D() { m_TransformationStack.push_back(glm::mat4(1.0)); }
 		public:
 			void push(glm::mat4 matrix, bool override = false) {
-				if (override)
-					m_TransformationStack.push_back(matrix);
-				else
-					m_TransformationStack.push_back(m_TransformationStack.back() * matrix);
-				m_CurrentTransformation = m_TransformationStack.back();
+				m_TransformationStack.push(matrix, override);
 			}
-
-			void pushTranslate(glm::vec3 vector, bool override = false) { push(glm::translate(vector), override); }
-
-			// Rotation matrix MUST be in radians!
-			void pushRotate(float angle, glm::vec3 vector, bool override = false) { push(glm::toMat4(glm::angleAxis(angle, vector)), override); }
-			
-			void pushScale(glm::vec3 vector, bool override = false) { push(glm::scale(vector), override); }
 
 			void pop() {
-				if (m_TransformationStack.size() > 1)
-					m_TransformationStack.pop_back();
-				m_CurrentTransformation = m_TransformationStack.back();
+				m_TransformationStack.pop();
 			}
+
+			glm::mat4 getTransformation() { return m_TransformationStack.transformation(); }
 
 			virtual void begin() = 0;
 			virtual void submit(Renderable2D* renderable) = 0;

@@ -1,3 +1,4 @@
+#include "renderable2d.h"
 #include "renderer2dbasic.h"
 
 #include <glm\gtx\transform.hpp>

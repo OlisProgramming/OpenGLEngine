@@ -1,5 +1,7 @@
 #include "layer.h"
 
+#include "../renderable2d.h"
+
 namespace thirdsengine {
 	namespace graphics {
 
@@ -26,7 +28,7 @@ namespace thirdsengine {
 			m_Shader->enable();
 			m_Renderer->begin();
 			for (Renderable2D* renderable : m_Renderables)
-				m_Renderer->submit(renderable);
+				renderable->submitTo(m_Renderer);
 			m_Renderer->end();
 			m_Renderer->flush();
 			m_Shader->disable();

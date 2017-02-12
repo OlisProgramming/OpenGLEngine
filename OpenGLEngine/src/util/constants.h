@@ -1,5 +1,11 @@
 #pragma once
 
+#include <iostream>
+#include <glm\glm.hpp>
+#include <glm\gtx\transform.hpp>
+#include <glm\gtc\quaternion.hpp>
+#include <glm\gtx\quaternion.hpp>
+
 // The constant Pi to 10 decimal places.
 #define PI 3.1415926536f
 
@@ -17,3 +23,9 @@
 #define DEGREES_60		PI_3
 #define DEGREES_45		PI_4
 #define DEGREES_30		PI_6
+
+#define MATRIX_TRANSLATE(vector)			glm::translate(vector)
+#define MATRIX_ROTATE(angleRadians, axis)	glm::toMat4(glm::angleAxis(angleRadians, axis))
+#define MATRIX_SCALE(vector)				glm::scale(vector)
+
+#define PRINT_MATRIX(mat4)					{ for (int __i = 0; __i < 4; __i++) { for (int __j = 0; __j < 4; __j++) std::cout << mat4[__i][__j] << " "; std::cout << std::endl; } std::cout << std::endl; }

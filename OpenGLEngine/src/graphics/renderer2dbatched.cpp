@@ -1,4 +1,6 @@
+#include "renderable2d.h"
 #include "renderer2dbatched.h"
+
 
 namespace thirdsengine {
 	namespace graphics {
@@ -61,7 +63,7 @@ namespace thirdsengine {
 				begin();
 			}
 
-			const glm::vec3& pos = m_CurrentTransformation * glm::vec4(renderable->getPosition(), 1.0);
+			const glm::vec3& pos = getTransformation() * glm::vec4(renderable->getPosition(), 1.0);
 			const glm::vec2& size = renderable->getSize();
 			const glm::vec4& colour = renderable->getColour();
 
