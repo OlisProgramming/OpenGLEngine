@@ -41,7 +41,7 @@ int main() {
 			group->add(new Sprite(glm::vec3(i, j, 0.0), glm::vec2(0.08, 0.08), glm::vec4(i / 20.0, 1.0, j / 20.0, 1.0)));
 
 	group->push(MATRIX_TRANSLATE(glm::vec3(-10, -10, 0)));
-	group->push(MATRIX_ROTATE(DEGREES_45, glm::vec3(0, 0, 1)));
+	group->push(MATRIX_ROTATE(DEGREES_45, AXIS_Z));
 	group->push(MATRIX_TRANSLATE(glm::vec3(10, 10, 0)));
 
 	layer->add(group);

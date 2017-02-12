@@ -24,6 +24,14 @@
 #define DEGREES_45		PI_4
 #define DEGREES_30		PI_6
 
+#define AXIS_X			VEC3_X
+#define AXIS_Y			VEC3_Y
+#define AXIS_Z			VEC3_Z
+
+#define VEC3_X			glm::vec3(1.f,0.f,0.f)
+#define VEC3_Y			glm::vec3(0.f,1.f,0.f)
+#define VEC3_Z			glm::vec3(0.f,0.f,1.f)
+
 #define MATRIX_TRANSLATE(vector)			glm::translate(vector)
 #define MATRIX_ROTATE(angleRadians, axis)	glm::toMat4(glm::angleAxis(angleRadians, axis))
 #define MATRIX_SCALE(vector)				glm::scale(vector)
